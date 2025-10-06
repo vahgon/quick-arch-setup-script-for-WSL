@@ -177,7 +177,7 @@ else
 sudo -S mkdir /usr/share/wordlists
 fi
 
-sudo -S wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O /usr/share/wordlists/SecList.zip && sudo unzip /usr/share/wordlists/SecList.zip && sudo rm -f /usr/share/wordlists/SecList.zip
+sudo -S wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O /usr/share/wordlists/SecList.zip && sudo unzip -o /usr/share/wordlists/SecList.zip -d /usr/share/wordlists/seclist && sudo rm -f /usr/share/wordlists/SecList.zip
 sudo -S git clone https://github.com/the-xentropy/samlists /usr/share/wordlists/samlists
 
 clear
