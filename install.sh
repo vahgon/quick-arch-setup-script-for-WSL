@@ -206,7 +206,7 @@ echo 'export GOPATH="$HOME/go"' >> ~/.$pntshl
 echo 'export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"' >> ~/.$pntshl
 echo 'export PATH="$PATH:/snap/bin"' >> ~/.$pntshl
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.$pntshl
-echo 'export PATH="$HOME/.cargo/bin:$PATH"'
+echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.$pntshl
 echo 'source ~/.bash_profile' >> ~/.$pntshl
 echo 'PIPENV_VENV_IN_PROJECT=1' >> ~/.$pntshl
 direnv hook $curshell >> ~/.$pntshl
