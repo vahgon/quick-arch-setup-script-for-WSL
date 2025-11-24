@@ -39,7 +39,7 @@ fi
 clear
 
 echo "installing packages..." 
-pacman -S curl wget fzf gcc python-virtualenv python-pycurl git unzip libcurl-compat python python-pip vim python-pipx pyenv rustup nano vim make tmux zip direnv nmap jq python-dnspython ruby python-pipenv python-requests --noconfirm 
+pacman -S git base-devel curl wget fzf gcc python-virtualenv python-pycurl git unzip libcurl-compat python python-pip python-pipx pyenv rustup nano vim make tmux zip direnv nmap ruby python-pipenv python-requests --noconfirm 
 
 cp /root/install.sh /home/$username/
 cp /root/bash_profile /home/$username/
@@ -60,7 +60,6 @@ rm bash_profile
 
 cd ~
 
-sudo -S pacman -S --needed git base-devel --noconfirm
 echo "installing yay..."
 git clone https://aur.archlinux.org/yay.git
 cd ~/yay
@@ -100,85 +99,8 @@ export PATH=$PATH:/snap/bin
 cd ~
 fi
 
-curl -sL https://raw.githubusercontent.com/epi052/feroxbuster/main/install-nix.sh | bash -s $HOME/.local/bin
-cargo install rustscan
-
-sudo -S systemctl enable --now snapd.socket 
-
-GOPOS=("github.com/projectdiscovery/alterx/cmd/alterx@latest" "github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest" "github.com/projectdiscovery/httpx/cmd/httpx@latest" "github.com/projectdiscovery/katana/cmd/katana@latest"
-"github.com/tomnomnom/waybackurls@latest" "github.com/tomnomnom/anew@latest" "github.com/tomnomnom/meg@latest" "github.com/tomnomnom/unfurl@latest" "github.com/tomnomnom/gron@latest" "github.com/ffuf/ffuf/v2@latest"
-"github.com/projectdiscovery/interactsh/cmd/interactsh-client@latest" "github.com/incogbyte/shosubgo@latest" "github.com/sensepost/gowitness@latest" "github.com/lc/gau/v2/cmd/gau@latest" "github.com/OJ/gobuster/v3@latest"
-"github.com/rverton/webanalyze/cmd/webanalyze@latest")
-
-for gorepo in "${GOPOS[@]}"; do
-    go install "$gorepo"
-done 
-
-go get -u github.com/tomnomnom/gf
-go get -u github.com/tomnomnom/assetfinder
-
-mkdir ~/tools
-
-REPOS=("aboul3la/Sublist3r.git" "ticarpi/jwt_tool" "yassineaboukir/Asnlookup"
-"maurosoria/dirsearch.git --depth 1" "m4ll0k/SecretFinder.git" "rbsec/dnscan.git"
-"roys/cewler.git --depth 1")
-
-cd ~/tools/
-for repo in "${REPOS[@]}"; do
-    
-    repo_name=$(echo "$repo" | awk -F'/' '{print $2}' | awk '{print $1}' | sed 's/.git$//')
-    git clone https://github.com/$repo $repo_name
-
-    cd ~/tools/"$repo_name"
-
-    pipenv install 
-    echo "layout pipenv" >> ./.envrc
-    direnv allow
-
-    sed -i "1i #\!$(pwd)/.venv/bin/python" "$(find . -type f -name '*.py' | head -n 1)"
-    cd ~/tools/
-done
-
-git clone --recurse-submodules https://github.com/r3nt0n/bopscrk
-cd ./bopscrk
-
-pipenv install
-echo "layout pipenv" >> ./.envrc
-direnv allow
-cd ./bopscrk
-sed -i "1i #\!/home/$username/tools/bopscrk/.venv/bin/python" bopscrk.py
-ln ~/tools/bopscrk/bopscrk/bopscrk.py ~/.local/bin/bopscrk
-
-cd ~/tools/
-git clone https://github.com/blechschmidt/massdns.git
-cd massdns
-make
-go install github.com/d3mondev/puredns/v2@latest
-
-cd ~/tools/
-git clone https://github.com/jobertabma/virtual-host-discovery.git
-
-
-cd ~/tools/
-git clone https://github.com/iamj0ker/bypass-403
-cd bypass-403
-chmod +x bypass-403.sh
-
-pipx install arjun
-pipx install git+https://github.com/xnl-h4ck3r/xnLinkFinder.git
-pipx install bbot
-pipx install git+https://github.com/xnl-h4ck3r/waymore.git
-
-webanalyze -update
-
-if [[ -d /usr/share/wordlists ]]; then
-:
-else
-sudo -S mkdir /usr/share/wordlists
-fi
-
-sudo -S wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O /usr/share/wordlists/SecList.zip && sudo unzip -o /usr/share/wordlists/SecList.zip -d /usr/share/wordlists/seclist && sudo rm -f /usr/share/wordlists/SecList.zip
-sudo -S git clone https://github.com/the-xentropy/samlists /usr/share/wordlists/samlists
+source ~/.bashrc
+sudo systemctl enable --now snapd.socket 
 
 clear
 
