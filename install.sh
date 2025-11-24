@@ -104,40 +104,8 @@ sudo systemctl enable --now snapd.socket
 
 clear
 
-curshell=bashrc
-if [[ "$(echo $SHELL)" == "/usr/bin/bash" ]]; then
-read -p "switch to zsh? (y/n) " ans
-if [[ "$ans" == "y" ]]; then
-    curshell=zsh
-    sudo -S pacman -S zsh --noconfirm
-fi
-fi
+direnv hook $curshell >> ~/.bashrc
 
-if [[ "$curshell" == "zsh" ]]; then
-pntshl=zshrc
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"    
-sed -i 's|^ZSH_THEME=.*|ZSH_THEME="powerlevel10k/powerlevel10k"|' ~/.zshrc
-else
-    pntshl=bashrc
-    curshell=bash
-fi
+rm ./install.sh
 
-echo 'export GOROOT="/usr/local/go"' >> ~/.$pntshl
-echo 'export GOPATH="$HOME/go"' >> ~/.$pntshl
-echo 'export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"' >> ~/.$pntshl
-echo 'export PATH="$PATH:/snap/bin"' >> ~/.$pntshl
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.$pntshl
-echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.$pntshl
-echo 'source ~/.bash_profile' >> ~/.$pntshl
-echo 'PIPENV_VENV_IN_PROJECT=1' >> ~/.$pntshl
-direnv hook $curshell >> ~/.$pntshl
-
-sudo -S snap install amass
-
-if [[ -f ~/.zshrc ]]; then
-chsh -s $(which zsh)
-echo "bindkey -v" >> ~/.zshrc
-clear
-fi
 fi
