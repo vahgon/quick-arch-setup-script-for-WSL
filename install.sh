@@ -18,7 +18,9 @@ if [[ -n $username ]]; then
 fi
 
 passwd "$username"
+clear
 
+# Make sure this is WSL
 if [[ -f /etc/wsl.conf ]]; then
 localectl set-locale LANG=en_US.UTF-8
     while true; do
