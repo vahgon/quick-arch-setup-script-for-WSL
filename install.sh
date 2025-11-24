@@ -1,5 +1,6 @@
 #!/bin/bash
 
+SCRIPT_PATH=$(realpath "$0")
 if [[ "$1" != "user-setup" ]]; then
 
 echo "setting up system..."
