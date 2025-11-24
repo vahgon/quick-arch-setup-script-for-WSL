@@ -13,8 +13,7 @@ if [[ -n $username ]]; then
     useradd -m "$username"
     
     usermod -aG wheel $username
-    echo "$username ALL=(ALL) NOPASSWD: /usr/bin/pacman" >> /etc/sudoers
-    
+    echo "$username ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
     echo "user created and has root access"
 fi
 
