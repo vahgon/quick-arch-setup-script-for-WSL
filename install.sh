@@ -53,9 +53,15 @@ clear
 else
 
 # ---user setup------------------------------------------------
-echo "setting up user"
+usrPath=('export GOROOT="/usr/local/go"' 'export GOPATH="$HOME/go"' 'export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"' 'export PATH="$PATH:/snap/bin"' 
+'export PATH="$HOME/.local/bin:$PATH"' 'export PATH="$HOME/.cargo/bin:$PATH"' 'PIPENV_VENV_IN_PROJECT=1')
 username="$2"
 
+for dir in "${usrPath[@]}"; do
+echo ${dir} >> ~/.bashrc
+done
+
+echo "setting up user"
 cat bash_profile >> .bash_profile
 rm bash_profile
 
@@ -66,37 +72,27 @@ git clone https://aur.archlinux.org/yay.git
 cd ~/yay
 makepkg -si
 cd ~
-rm -rf ~/yay
-
-export PATH=$PATH:/snap/bin
-export PATH=$HOME/.local/bin:$PATH
-PIPENV_VENV_IN_PROJECT=1
 
 mkdir -p ~/.local/bin
 
 clear
-echo "installing default stable toolchain via rustup..."
+echo "installing stable toolchain via rustup..."
 rustup default stable
 clear
-export PATH=$HOME/.cargo/bin:$PATH
 
 if [[ -z "$GOPATH" ]]; then
 echo "installing go..."
 wget "https://dl.google.com/go/$(curl https://go.dev/VERSION?m=text | head -n1).linux-amd64.tar.gz"
-sudo -S tar -xvf $(curl https://go.dev/VERSION?m=text | head -n1).linux-amd64.tar.gz
+sudo tar -xvf $(curl https://go.dev/VERSION?m=text | head -n1).linux-amd64.tar.gz
 rm -f $(curl https://go.dev/VERSION?m=text | head -1).linux-amd64.tar.gz
-sudo -S mv ~/go /usr/local
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+sudo mv ~/go /usr/local
 fi
 
 if [[ -d /snap ]]; then
 :
 else
 yay -S snapd
-sudo -S ln -s /var/lib/snapd/snap /snap
-export PATH=$PATH:/snap/bin
+sudo ln -s /var/lib/snapd/snap /snap
 cd ~
 fi
 
