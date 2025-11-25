@@ -1,10 +1,11 @@
-script to quickly setup a fresh arch distro in WSL.
-specifically, the script:
-1. sets up default user
-2. installs cybersec tooling (configures go, rust, etc.)
-3. gives choice of switching to zsh
+# Arch setup script for WSL
 
-### todo
-- fix python auto-env for specific repos
-- get assetnote wordlists
-- make it look pretty 
+<p>My streamlined process for configuring a baseline image of Arch Linux for WSL that fits my needs.</p>
+<p>paste into console:</p>
+
+```shell
+curl -O https://raw.githubusercontent.com/vahgon/QuickArch-WSL/main/install.sh && \
+curl -O https://raw.githubusercontent.com/vahgon/QuickArch-WSL/main/bash_profile && \
+chmod +x install.sh && \
+./install.sh`
+```
