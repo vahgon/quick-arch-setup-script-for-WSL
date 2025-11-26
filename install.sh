@@ -103,6 +103,7 @@ sudo systemctl enable --now snapd.socket
 clear
 
 direnv hook $curshell >> ~/.bashrc
+echo 'export EDITOR=vim' >> ~/.bashrc
 
 rm ./install.sh
 
