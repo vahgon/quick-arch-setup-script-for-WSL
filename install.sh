@@ -105,6 +105,10 @@ clear
 direnv hook $curshell >> ~/.bashrc
 echo 'export EDITOR=vim' >> ~/.bashrc
 
+echo 'if [[ -z "$TMUX_PANE" ]]; then
+    tmux new-session -A -s "${USER}"
+fi' >> ~/.bashrc
+
 rm ./install.sh
 
 fi
