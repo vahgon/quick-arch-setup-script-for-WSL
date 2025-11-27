@@ -41,7 +41,7 @@ fi
 clear
 
 echo "installing packages..." 
-pacman -S git base-devel curl wget fzf gcc python-virtualenv python-pycurl git unzip libcurl-compat python python-pip python-pipx pyenv rustup nano vim make tmux zip direnv nmap ruby python-pipenv python-requests --noconfirm 
+pacman -S git base-devel curl man-db wget fzf gcc python-virtualenv python-pycurl git unzip libcurl-compat python python-pip python-pipx pyenv rustup nano vim make tmux zip direnv nmap ruby python-pipenv python-requests --noconfirm 
 
 cp /root/install.sh /home/$username/
 cp /root/bash_profile /home/$username/
